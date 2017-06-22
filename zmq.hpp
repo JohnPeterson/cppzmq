@@ -624,6 +624,15 @@ namespace zmq
             return(ptr != NULL);
         }
 
+#ifdef ZMQ_BUILD_DRAFT_API
+        inline void join (const char *group_)
+        {
+            int rc = zmq_join (ptr, group_);
+            if (rc != 0)
+                throw error_t ();
+        }
+#endif
+
         inline size_t send (const void *buf_, size_t len_, int flags_ = 0)
         {
             int nbytes = zmq_send (ptr, buf_, len_, flags_);
